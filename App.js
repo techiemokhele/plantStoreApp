@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 
-//import custom dependencies
 import Navigation from "./navigation";
 import { Block } from "./components";
 
@@ -33,20 +32,21 @@ const images = [
 ];
 
 export default class App extends React.Component {
-  //app loading state
   state = {
     isLoadingComplete: false,
   };
 
-  //cache all images assets
   handleResourcesAsync = async () => {
+    // we're caching all the images
+    // for better performance on the app
+
     const cacheImages = images.map((image) => {
       return Asset.fromModule(image).downloadAsync();
     });
+
     return Promise.all(cacheImages);
   };
 
-  //render loading function
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
